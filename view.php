@@ -70,5 +70,4 @@ if (get_user_preferences(NEWSLETTER_PREFERENCE_COUNT, false) ||
 }
 
 echo $newsletter->view($params);
-
 die();
