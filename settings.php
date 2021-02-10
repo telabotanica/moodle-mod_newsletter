@@ -81,7 +81,7 @@ $settings->add(
                 get_string('config_username', 'mod_newsletter'), '', '', PARAM_TEXT));
 $settings->add(
         new admin_setting_configpasswordunmask('mod_newsletter/password',
-                get_string('config_password', 'mod_newsletter'), '', '', PARAM_TEXT));
+                get_string('config_password', 'mod_newsletter'), '', ''));
 $settings->add(
         new admin_setting_configselect('mod_newsletter/service',
                 get_string('config_service', 'mod_newsletter'), '', '',
@@ -93,3 +93,25 @@ $settings->add(
 $settings->add(
         new admin_setting_configtext('mod_newsletter/port',
                 get_string('config_port', 'mod_newsletter'), '', null, PARAM_INT));
+
+// Add custom settings option.
+$settings->add(
+        new admin_setting_heading('mod_newsletter/customsmtp',
+                get_string('customsmtp_label', 'mod_newsletter'),
+                get_string('customsmtp_info', 'mod_newsletter', $a)));
+$settings->add(
+        new admin_setting_configcheckbox('mod_newsletter/activesmtpcustom',
+                get_string('activesmtpcustom_label', 'mod_newsletter'),
+                get_string('activesmtpcustom_desc', 'mod_newsletter'), 0));
+$settings->add(
+        new admin_setting_configtext('mod_newsletter/smtpcustomhost',
+                get_string('config_smtpcustomhost', 'mod_newsletter'), get_string('config_smtpcustomhostdesc', 'mod_newsletter'),
+                '', PARAM_TEXT));
+$settings->add(
+        new admin_setting_configtext('mod_newsletter/smtpcustomuser',
+                get_string('config_smtpcustomuser', 'mod_newsletter'), get_string('config_smtpcustomuserdesc', 'mod_newsletter'),
+                '', PARAM_TEXT));
+$settings->add(
+        new admin_setting_configpasswordunmask('mod_newsletter/smtpcustompassword',
+                get_string('config_smtpcustompassword', 'mod_newsletter'),
+                get_string('config_smtpcustompassworddesc', 'mod_newsletter'), ''));

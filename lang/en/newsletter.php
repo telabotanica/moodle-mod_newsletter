@@ -254,3 +254,15 @@ $string['privacy:metadata:newsletter_deliveries:userid'] = 'User who received th
 $string['privacy:metadata:newsletter_deliveries:issueid'] = 'ID of the issue we sent';
 $string['privacy:metadata:newsletter_deliveries:newsletterid'] = 'ID of the newsletter we sent';
 $string['privacy:metadata:newsletter_deliveries:delivered'] = 'Timestamp of newsletter delivery';
+
+// Traduction custom smtp settings.
+$string['customsmtp_label'] = "Custom SMTP";
+$string['customsmtp_info'] = "These options allow you to define a third party SMTP if you need to manage the mails sent by the newsletter system via another SMTP than the one managed by moodle.";
+$string['activesmtpcustom_label'] = "Activate a third-party smtp";
+$string['activesmtpcustom_desc'] = "If you check this option then the default moodle options will be overridden by the one defined below for newsletter plugin.";
+$string['config_smtpcustomhost'] = "SMTP Host";
+$string['config_smtpcustomhostdesc'] = "Give the full name of one or more local SMTP servers that Moodle should use to send mail (eg 'mail.a.com' or 'mail.a.com;mail.b.com'). To specify a non-default port (i.e other than port 25), you can use the [server]:[port] syntax (eg 'mail.a.com:587'). For secure connections, port 465 is usually used with SSL, port 587 is usually used with TLS, specify security protocol below if required. If you leave this field blank, Moodle will use the PHP default method of sending mail.";
+$string['config_smtpcustomuser'] = 'SMTP Username';
+$string['config_smtpcustomuserdesc'] = 'If you have specified an SMTP server above, and the server requires authentication, then enter the username here.';
+$string['config_smtpcustompassword'] = 'SMTP password';
+$string['config_smtpcustompassworddesc'] = 'If you have specified an SMTP server above, and the server requires authentication, then enter the password here.';

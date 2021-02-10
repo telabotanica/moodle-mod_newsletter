@@ -123,9 +123,9 @@ define('NEWSLETTER_SUBSCRIPTION_LIST_COLUMN_ACTIONS', 'col_actions');
 /**
  * Returns the information on whether the module supports a feature
  *
- * @see plugin_supports() in lib/moodlelib.php
  * @param string $feature FEATURE_xx constant for requested feature
  * @return mixed true if the feature is supported, null if unknown
+ * @see plugin_supports() in lib/moodlelib.php
  */
 function newsletter_supports($feature) {
     switch ($feature) {
@@ -357,8 +357,8 @@ function newsletter_get_all_valid_recipients($newsletterid) {
 /**
  * Returns all other caps used in the module
  *
- * @example return array('moodle/site:accessallgroups');
  * @return array
+ * @example return array('moodle/site:accessallgroups');
  */
 function newsletter_get_extra_capabilities() {
     return array();
@@ -366,7 +366,7 @@ function newsletter_get_extra_capabilities() {
 
 // Find the base url from $_GET variables, for print_paging_bar.
 function newsletter_get_baseurl() {
-    $getcopy  = $_GET;
+    $getcopy = $_GET;
 
     unset($getcopy['blogpage']);
 
@@ -379,7 +379,7 @@ function newsletter_get_baseurl() {
                 $first = true;
                 $querystring .= "?$var=$val";
             } else {
-                $querystring .= '&amp;'.$var.'='.$val;
+                $querystring .= '&amp;' . $var . '=' . $val;
                 $hasparam = true;
             }
         }
@@ -390,6 +390,7 @@ function newsletter_get_baseurl() {
     return strip_querystring(qualified_me()) . $querystring;
 
 }
+
 // File API.
 
 /**
@@ -405,15 +406,12 @@ function newsletter_get_baseurl() {
  */
 function newsletter_get_file_areas($course, $cm, $context) {
     return array(NEWSLETTER_FILE_AREA_ATTACHMENT => 'attachments',
-        NEWSLETTER_FILE_AREA_STYLESHEET => 'stylesheets',
-        NEWSLETTER_FILE_AREA_ISSUE => 'htmlcontent of editor');
+            NEWSLETTER_FILE_AREA_STYLESHEET => 'stylesheets',
+            NEWSLETTER_FILE_AREA_ISSUE => 'htmlcontent of editor');
 }
 
 /**
  * File browsing support for newsletter file areas
- *
- * @package mod_newsletter
- * @category files
  *
  * @param \file_browser $browser
  * @param array $areas
@@ -425,6 +423,9 @@ function newsletter_get_file_areas($course, $cm, $context) {
  * @param string $filepath
  * @param string $filename
  * @return \file_info instance or null if not found
+ * @package mod_newsletter
+ * @category files
+ *
  */
 function newsletter_get_file_info($browser, $areas, $course, $cm, $context, $filearea, $itemid,
         $filepath, $filename) {
@@ -497,9 +498,6 @@ function newsletter_get_file_info($browser, $areas, $course, $cm, $context, $fil
 /**
  * Serves the files from the newsletter file areas
  *
- * @package mod_newsletter
- * @category files
- *
  * @param stdClass $course the course object
  * @param stdClass $cm the course module object
  * @param stdClass $context the newsletter's context
@@ -507,6 +505,9 @@ function newsletter_get_file_info($browser, $areas, $course, $cm, $context, $fil
  * @param array $args extra arguments (itemid, path)
  * @param bool $forcedownload whether or not force download
  * @param array $options additional options affecting the file serving
+ * @category files
+ *
+ * @package mod_newsletter
  */
 function newsletter_pluginfile($course, $cm, $context, $filearea, array $args, $forcedownload,
         array $options = array()) {
@@ -582,7 +583,7 @@ function newsletter_extend_navigation(navigation_node $navref, stdclass $course,
             $issueid = optional_param(NEWSLETTER_PARAM_ISSUE, NEWSLETTER_NO_ISSUE, PARAM_INT);
             $url = new moodle_url('/mod/newsletter/view.php',
                     array(NEWSLETTER_PARAM_ID => $cm->id, 'action' => NEWSLETTER_ACTION_EDIT_ISSUE,
-                        NEWSLETTER_PARAM_ISSUE => $issueid));
+                            NEWSLETTER_PARAM_ISSUE => $issueid));
             $issuenode = $navref->add(get_string('edit_issue', 'mod_newsletter'), $url);
             $issuenode->make_active();
             break;
@@ -593,7 +594,7 @@ function newsletter_extend_navigation(navigation_node $navref, stdclass $course,
                     array('id' => $issueid, 'newsletterid' => $module->id));
             $url = new moodle_url('/mod/newsletter/view.php',
                     array(NEWSLETTER_PARAM_ID => $cm->id, 'action' => NEWSLETTER_ACTION_READ_ISSUE,
-                        NEWSLETTER_PARAM_ISSUE => $issueid));
+                            NEWSLETTER_PARAM_ISSUE => $issueid));
             $issuenode = $navref->add($issuename, $url);
             $issuenode->make_active();
             break;
@@ -602,7 +603,7 @@ function newsletter_extend_navigation(navigation_node $navref, stdclass $course,
             $issueid = optional_param(NEWSLETTER_PARAM_ISSUE, NEWSLETTER_NO_ISSUE, PARAM_INT);
             $url = new moodle_url('/mod/newsletter/view.php',
                     array(NEWSLETTER_PARAM_ID => $cm->id, 'action' => NEWSLETTER_ACTION_DELETE_ISSUE,
-                        NEWSLETTER_PARAM_ISSUE => $issueid));
+                            NEWSLETTER_PARAM_ISSUE => $issueid));
             $issuenode = $navref->add(get_string('delete_issue', 'mod_newsletter'), $url);
             $issuenode->make_active();
             break;
@@ -610,7 +611,7 @@ function newsletter_extend_navigation(navigation_node $navref, stdclass $course,
             require_capability('mod/newsletter:managesubscriptions', $context);
             $url = new moodle_url('/mod/newsletter/view.php',
                     array(NEWSLETTER_PARAM_ID => $cm->id,
-                        'action' => NEWSLETTER_ACTION_MANAGE_SUBSCRIPTIONS));
+                            'action' => NEWSLETTER_ACTION_MANAGE_SUBSCRIPTIONS));
             $subnode = $navref->add(get_string('newsletter:managesubscriptions', 'mod_newsletter'),
                     $url);
             $subnode->make_active();
@@ -639,13 +640,13 @@ function newsletter_extend_settings_navigation(settings_navigation $settingsnav,
         $newsletternode->add(get_string('manage_subscriptions', 'mod_newsletter'),
                 new moodle_url('/mod/newsletter/view.php',
                         array('id' => $newsletter->get_course_module()->id,
-                            'action' => NEWSLETTER_ACTION_MANAGE_SUBSCRIPTIONS)));
+                                'action' => NEWSLETTER_ACTION_MANAGE_SUBSCRIPTIONS)));
     }
     if (has_capability('mod/newsletter:createissue', $newsletter->get_context())) {
         $newsletternode->add(get_string('newsletter:createissue', 'mod_newsletter'),
                 new moodle_url('/mod/newsletter/view.php',
                         array('id' => $newsletter->get_course_module()->id,
-                            'action' => NEWSLETTER_ACTION_CREATE_ISSUE)));
+                                'action' => NEWSLETTER_ACTION_CREATE_ISSUE)));
     }
 }
 
@@ -716,7 +717,7 @@ function newsletter_email_to_user($user, $from, $subject, $messagetext, $message
 
     if (email_should_be_diverted($user->email)) {
         $subject = "[DIVERTED {$user->email}] $subject";
-        $user = clone ($user);
+        $user = clone($user);
         $user->email = $CFG->divertallemailsto;
     }
 
@@ -765,7 +766,9 @@ function newsletter_email_to_user($user, $from, $subject, $messagetext, $message
         $messagehtml = preg_replace_callback("%href=[\"'`]($CFG->wwwroot[\w_:\?=#&@/;.~-]*)[\"'`]%",
                 $callback, $messagehtml);
     }
-    $mail = get_mailer();
+
+    // Mail default moodle config will be override if custom smtp settings are define in plugin settings.
+    $mail = override_mail_config(get_mailer());
 
     if (!empty($mail->SMTPDebug)) {
         echo '<pre>' . "\n";
@@ -885,8 +888,8 @@ function newsletter_email_to_user($user, $from, $subject, $messagetext, $message
 
     $renderer = $PAGE->get_renderer('core');
     $context = array('sitefullname' => $SITE->fullname, 'siteshortname' => $SITE->shortname,
-        'sitewwwroot' => $CFG->wwwroot, 'subject' => $subject, 'to' => $user->email,
-        'toname' => fullname($user), 'from' => $mail->From, 'fromname' => $mail->FromName);
+            'sitewwwroot' => $CFG->wwwroot, 'subject' => $subject, 'to' => $user->email,
+            'toname' => fullname($user), 'from' => $mail->From, 'fromname' => $mail->FromName);
     if (!empty($tempreplyto[0])) {
         $context['replyto'] = $tempreplyto[0][0];
         $context['replytoname'] = $tempreplyto[0][1];
@@ -1020,9 +1023,9 @@ function newsletter_email_to_user($user, $from, $subject, $messagetext, $message
         // Trigger event for failing to send email.
         $event = \core\event\email_failed::create(
                 array('context' => context_system::instance(), 'userid' => $from->id,
-                    'relateduserid' => $user->id,
-                    'other' => array('subject' => $subject, 'message' => $messagetext,
-                        'errorinfo' => $mail->ErrorInfo)));
+                        'relateduserid' => $user->id,
+                        'other' => array('subject' => $subject, 'message' => $messagetext,
+                                'errorinfo' => $mail->ErrorInfo)));
         $event->trigger();
         if (CLI_SCRIPT) {
             mtrace('Error: lib/moodlelib.php email_to_user(): ' . $mail->ErrorInfo);
@@ -1034,3 +1037,22 @@ function newsletter_email_to_user($user, $from, $subject, $messagetext, $message
     }
 }
 
+/** This function will override SMTP moodle config with plugin settings
+ * In case we need a different smtp from moodle settings.
+ *
+ * @param moodle_phpmailer $mail
+ * @return moodle_phpmailer
+ */
+function override_mail_config(moodle_phpmailer $mail): moodle_phpmailer {
+    $config = get_config('mod_newsletter');
+    // This code will set up ur smtp config and associate mailer.
+    // If checkbox in plugin settings is set up.
+    if ($config->activesmtpcustom) {
+        $mail->Host = $config->smtpcustomhost;
+        $mail->Username = $config->smtpcustomuser;
+        $mail->Password = $config->smtpcustompassword;
+        $mail->Mailer = 'smtp';
+        $mail->SMTPAuth = true;
+    }
+    return $mail;
+}
