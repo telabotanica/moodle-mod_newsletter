@@ -108,6 +108,14 @@ $settings->add(
                 get_string('config_smtpcustomhost', 'mod_newsletter'), get_string('config_smtpcustomhostdesc', 'mod_newsletter'),
                 '', PARAM_TEXT));
 $settings->add(
+        new admin_setting_configselect('mod_newsletter/smtpcustomsecure',
+                get_string('config_smtpcustomsecure', 'mod_newsletter'), get_string('config_smtpcustomsecuredesc', 'mod_newsletter'),
+                '', [
+                    '' => get_string('none', 'admin'),
+                    'ssl' => 'SSL',
+                    'tls' => 'TLS',
+                ]));
+$settings->add(
         new admin_setting_configtext('mod_newsletter/smtpcustomuser',
                 get_string('config_smtpcustomuser', 'mod_newsletter'), get_string('config_smtpcustomuserdesc', 'mod_newsletter'),
                 '', PARAM_TEXT));

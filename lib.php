@@ -1043,16 +1043,38 @@ function newsletter_email_to_user($user, $from, $subject, $messagetext, $message
  * @param moodle_phpmailer $mail
  * @return moodle_phpmailer
  */
-function override_mail_config(moodle_phpmailer $mail): moodle_phpmailer {
+function override_mail_config(moodle_phpmailer $mailer): moodle_phpmailer {
     $config = get_config('mod_newsletter');
     // This code will set up ur smtp config and associate mailer.
     // If checkbox in plugin settings is set up.
     if ($config->activesmtpcustom) {
-        $mail->Host = $config->smtpcustomhost;
-        $mail->Username = $config->smtpcustomuser;
-        $mail->Password = $config->smtpcustompassword;
-        $mail->Mailer = 'smtp';
-        $mail->SMTPAuth = true;
+        if ($config->smtpcustomhost == 'qmail') {
+            // Use Qmail system.
+            $mailer->isQmail();
+
+        } else if (empty($config->smtpcustomhost)) {
+            // Use PHP mail() = sendmail.
+            $mailer->isMail();
+
+        } else {
+            // Use SMTP directly.
+            $mailer->isSMTP();
+            // Specify main and backup servers.
+            $mailer->Host          = $config->smtpcustomhost;
+            // Specify secure connection protocol.
+            $mailer->SMTPSecure    = $config->smtpcustomsecure;
+
+            if ($config->smtpcustomuser) {
+                // Use SMTP authentication.
+                $mailer->SMTPAuth = true;
+                $mailer->Username = $config->smtpcustomuser;
+                $mailer->Password = $config->smtpcustompassword;
+            } else {
+                $mailer->SMTPAuth = false;
+                $mailer->Username = null;
+                $mailer->Password = null;
+            }
+        }
     }
-    return $mail;
+    return $mailer;
 }
