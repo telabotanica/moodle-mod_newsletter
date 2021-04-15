@@ -227,7 +227,7 @@ $string['unsubscribe_mail_subj'] = 'Vous avez été désabonné avec succès de 
 $string['unsubscribe_mail_text'] = '<p>
 Bonjour {$a->firstname} {$a->lastname},
 <br>
-Vous avez été désabonné avec succès de la newsletter {$ a-> newslettertitle}. Si vous l\'avez fait exprès, il n\'y a plus rien à faire. Si vous vous êtes désabonné accidentellement, vous pouvez vous réinscrire maintenant sous le lien suivant:
+Vous avez été désabonné avec succès de la newsletter {$a->newslettertitle}. Si vous l\'avez fait exprès, il n\'y a plus rien à faire. Si vous vous êtes désabonné accidentellement, vous pouvez vous réinscrire maintenant sous le lien suivant:
 <br>
 {$a->newsletterurl}</p>';
 $string['unsubscribe_nounsub_text'] = 'N\'envoyez pas de lien de désabonnement.';
